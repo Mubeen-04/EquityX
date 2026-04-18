@@ -21,7 +21,7 @@ const Menu = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("userId");
     localStorage.removeItem("email");
-    window.location.href = "http://localhost:3000/";
+    window.location.href = "/";
   };
 
   const menuClass = "menu";

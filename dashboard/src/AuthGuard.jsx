@@ -9,7 +9,7 @@ function AuthGuard({ children }) {
     if (!token) {
       // Redirect to frontend login
       console.log("No token found, redirecting to login...");
-      window.location.href = "http://localhost:3000/login";
+      window.location.href = "/login";
     } else {
       console.log("Token found, user authenticated");
       setIsAuthenticated(true);
