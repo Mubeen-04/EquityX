@@ -1,0 +1,20 @@
+services:
+  - type: web
+    name: zerodha-app
+    runtime: node
+    plan: free
+    buildCommand: "npm install --prefix frontend && npm install --prefix dashboard && npm install --prefix backend && npm run build --prefix backend"
+    startCommand: "npm start --prefix backend"
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: MONGO_URL
+        sync: false
+      - key: JWT_SECRET
+        sync: false
+      - key: STRIPE_SECRET_KEY
+        sync: false
+      - key: STRIPE_WEBHOOK_SECRET
+        sync: false

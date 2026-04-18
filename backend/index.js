@@ -8,6 +8,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const http = require("http");
 const socketIO = require("socket.io");
+const path = require("path");
 
 // Initialize Stripe only if the secret key is provided
 let stripe = null;
@@ -1264,6 +1265,16 @@ app.get("/ticket/:ticketId", async (req, res) => {
     console.error("Get ticket error:", error);
     res.status(500).json({ msg: "Error fetching ticket" });
   }
+});
+
+// Serve static files from built apps
+const buildPath = path.join(__dirname, "..");
+app.use(express.static(path.join(buildPath, "dashboard/dist")));
+app.use(express.static(path.join(buildPath, "frontend/dist")));
+
+// SPA fallback - serve index.html for all unknown routes
+app.get("*", (req, res) => {
+  res.sendFile(path.join(buildPath, "frontend/dist/index.html"));
 });
 
 server.listen(PORT, () => {

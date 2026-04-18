@@ -1,10 +1,15 @@
 {
   "name": "backend",
   "version": "1.0.0",
-  "description": "",
+  "description": "Zerodha Stock Trading Platform - Backend",
   "main": "index.js",
+  "engines": {
+    "node": "18.x"
+  },
   "scripts": {
-    "start": "nodemon index.js"
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "build": "npm run build --prefix ../frontend && npm run build --prefix ../dashboard"
   },
   "author": "",
   "license": "ISC",
