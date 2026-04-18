@@ -1,0 +1,80 @@
+/* Connection Status Component Styles */
+
+.connection-status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+}
+
+.connection-status.offline-mode {
+  padding: 10px 15px;
+  background-color: #fff3cd;
+  border: 1px solid #ffc107;
+  border-radius: 4px;
+  gap: 8px;
+  font-size: 13px;
+  color: #856404;
+  font-weight: 500;
+}
+
+.connection-status.online-mode {
+  gap: 6px;
+  color: #999;
+}
+
+.connection-status.online-mode.connected {
+  color: #4CAF50;
+}
+
+.status-indicator {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.status-indicator.connected {
+  background-color: #4CAF50;
+  animation: pulse 2s infinite;
+}
+
+.status-indicator.polling {
+  background-color: #999;
+  animation: none;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.status-indicator.connected {
+  background: #28a745;
+}
+
+.status-indicator.disconnected {
+  background: #dc3545;
+  animation: none;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.status-text {
+  color: #333;
+  font-weight: 500;
+}
+
+.status-text.connected {
+  color: #28a745;
+}
+
+.status-text.disconnected {
+  color: #dc3545;
+}

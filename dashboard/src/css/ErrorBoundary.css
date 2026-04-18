@@ -1,0 +1,64 @@
+/* Error Boundary Component Styles */
+
+.error-boundary-container {
+  padding: 20px;
+  margin: 10px;
+  background-color: #f8d7da;
+  border: 1px solid #f5c6cb;
+  border-radius: 4px;
+  color: #721c24;
+  font-family: Arial, sans-serif;
+}
+
+.error-boundary-container h3 {
+  margin-top: 0;
+  margin-bottom: 10px;
+  font-size: 18px;
+}
+
+.error-boundary-container p {
+  margin: 10px 0;
+  line-height: 1.5;
+}
+
+.error-details {
+  white-space: pre-wrap;
+  margin-top: 10px;
+  padding: 10px;
+  background-color: #fff;
+  border: 1px solid #f5c6cb;
+  border-radius: 4px;
+  overflow-x: auto;
+}
+
+.error-details summary {
+  cursor: pointer;
+  font-weight: bold;
+  color: #721c24;
+  user-select: none;
+}
+
+.error-details summary:hover {
+  text-decoration: underline;
+}
+
+.error-reload-btn {
+  margin-top: 10px;
+  padding: 8px 16px;
+  background-color: #721c24;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: background-color 0.2s ease;
+}
+
+.error-reload-btn:hover {
+  background-color: #5a1620;
+}
+
+.error-reload-btn:active {
+  background-color: #4a1119;
+}

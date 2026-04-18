@@ -1,0 +1,394 @@
+.add-balance-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+}
+
+.add-balance-modal {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+  width: 90%;
+  max-width: 500px;
+  max-height: 90vh;
+  overflow-y: auto;
+  animation: slideUp 0.3s ease-out;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.add-balance-modal .modal-header {
+  padding: 24px;
+  border-bottom: 1px solid #f0f0f0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.add-balance-modal .modal-header h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: #1e1e1e;
+}
+
+.add-balance-modal .close-btn {
+  background: none;
+  border: none;
+  font-size: 28px;
+  cursor: pointer;
+  color: #999;
+  padding: 0;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s;
+}
+
+.add-balance-modal .close-btn:hover {
+  color: #333;
+}
+
+.add-balance-modal .modal-body {
+  padding: 28px;
+}
+
+.add-balance-modal .current-balance {
+  background: #f8f9fa;
+  padding: 16px;
+  border-radius: 8px;
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.add-balance-modal .current-balance .label {
+  font-size: 12px;
+  color: #666;
+  margin: 0 0 8px 0;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.add-balance-modal .current-balance .balance {
+  font-size: 32px;
+  color: #2ecc71;
+  font-weight: 700;
+  margin: 0;
+}
+
+.add-balance-modal .error-message {
+  background: #fee;
+  color: #c00;
+  padding: 12px 16px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  display: flex;
+  gap: 10px;
+  font-size: 14px;
+}
+
+.add-balance-modal .error-message span {
+  font-weight: bold;
+  flex-shrink: 0;
+}
+
+/* Amount Input Section */
+.add-balance-modal .amount-input-section {
+  margin-bottom: 24px;
+}
+
+.add-balance-modal .amount-input-section label {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: #1e1e1e;
+  margin-bottom: 8px;
+}
+
+.add-balance-modal .amount-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.add-balance-modal .amount-input-wrapper .currency {
+  position: absolute;
+  left: 16px;
+  font-size: 18px;
+  font-weight: 600;
+  color: #1e1e1e;
+}
+
+.add-balance-modal .amount-input {
+  width: 100%;
+  padding: 12px 16px 12px 40px;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 16px;
+  transition: border-color 0.2s;
+}
+
+.add-balance-modal .amount-input:focus {
+  outline: none;
+  border-color: #2ecc71;
+}
+
+.add-balance-modal .amount-input:disabled {
+  background: #f5f5f5;
+  cursor: not-allowed;
+}
+
+/* Quick Amounts */
+.add-balance-modal .quick-amounts {
+  margin-top: 20px;
+}
+
+.add-balance-modal .quick-amounts .label {
+  font-size: 12px;
+  color: #666;
+  margin-bottom: 10px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.add-balance-modal .quick-amounts .buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 8px;
+}
+
+.add-balance-modal .quick-btn {
+  padding: 10px 12px;
+  background: white;
+  border: 2px solid #e0e0e0;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #1e1e1e;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.add-balance-modal .quick-btn:hover:not(:disabled) {
+  border-color: #2ecc71;
+  background: #f0f9f5;
+  color: #2ecc71;
+}
+
+.add-balance-modal .quick-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Payment Form */
+.add-balance-modal .payment-form {
+  margin-bottom: 24px;
+}
+
+.add-balance-modal .summary {
+  background: #f8f9fa;
+  padding: 16px;
+  border-radius: 8px;
+  margin-bottom: 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.add-balance-modal .summary .label {
+  font-size: 14px;
+  color: #666;
+  font-weight: 500;
+  margin: 0;
+}
+
+.add-balance-modal .summary .amount {
+  font-size: 24px;
+  color: #2ecc71;
+  font-weight: 700;
+  margin: 0;
+}
+
+.add-balance-modal .card-element-wrapper {
+  margin-bottom: 24px;
+}
+
+.add-balance-modal .card-element-wrapper label {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: #1e1e1e;
+  margin-bottom: 8px;
+}
+
+.add-balance-modal .StripeElement {
+  padding: 12px 16px;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  background: white;
+}
+
+.add-balance-modal .payment-note {
+  font-size: 12px;
+  color: #666;
+  margin: 16px 0;
+  padding: 12px;
+  background: #fafafa;
+  border-left: 3px solid #2ecc71;
+  border-radius: 4px;
+}
+
+/* Modal Actions */
+.add-balance-modal .modal-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.add-balance-modal .btn-back {
+  flex: 1;
+  padding: 12px 20px;
+  background: white;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #1e1e1e;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.add-balance-modal .btn-back:hover:not(:disabled) {
+  border-color: #2ecc71;
+  background: #f0f9f5;
+  color: #2ecc71;
+}
+
+.add-balance-modal .btn-back:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.add-balance-modal .btn-add {
+  flex: 1;
+  padding: 12px 20px;
+  background: #2ecc71;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  color: white;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.add-balance-modal .btn-add:hover:not(:disabled) {
+  background: #27ae60;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(46, 204, 113, 0.3);
+}
+
+.add-balance-modal .btn-add:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Modal Footer */
+.add-balance-modal .modal-footer {
+  padding: 0 28px 28px;
+  display: flex;
+  gap: 12px;
+}
+
+.add-balance-modal .btn-cancel {
+  flex: 1;
+  padding: 12px 20px;
+  background: white;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #1e1e1e;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.add-balance-modal .btn-cancel:hover:not(:disabled) {
+  border-color: #dc3545;
+  background: #ffe5e5;
+  color: #dc3545;
+}
+
+.add-balance-modal .btn-cancel:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.add-balance-modal .btn-continue {
+  flex: 1;
+  padding: 12px 20px;
+  background: #2ecc71;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  color: white;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.add-balance-modal .btn-continue:hover:not(:disabled) {
+  background: #27ae60;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(46, 204, 113, 0.3);
+}
+
+.add-balance-modal .btn-continue:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .add-balance-modal {
+    width: 95%;
+    max-height: 95vh;
+  }
+
+  .add-balance-modal .quick-amounts .buttons {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .add-balance-modal .modal-header {
+    padding: 20px;
+  }
+
+  .add-balance-modal .modal-body {
+    padding: 20px;
+  }
+
+  .add-balance-modal .modal-footer {
+    padding: 0 20px 20px;
+  }
+}

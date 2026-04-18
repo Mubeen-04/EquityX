@@ -1,0 +1,432 @@
+/* ============================================
+   ENHANCED BUY/SELL WINDOW STYLING
+   ============================================ */
+
+.container {
+  --radius: 12px;
+  width: 480px;
+  background: #ffffff;
+  position: absolute;
+  bottom: 0;
+  left: 35%;
+  cursor: move;
+  box-sizing: border-box;
+  z-index: 100;
+  border-radius: var(--radius);
+  border: none;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.dragging {
+  opacity: 0;
+}
+
+/* ============================================
+   WINDOW HEADER
+   ============================================ */
+
+.window-header {
+  width: 100%;
+  padding: 20px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #ffffff;
+}
+
+.window-header.buy-header {
+  background: linear-gradient(135deg, #1976D2 0%, #1565C0 100%);
+}
+
+.window-header.sell-header {
+  background: linear-gradient(135deg, #DC3545 0%, #C82333 100%);
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+}
+
+.header-icon {
+  font-size: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+}
+
+.header-text h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.header-text p {
+  margin: 4px 0 0 0;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.8);
+  font-weight: 400;
+}
+
+/* ============================================
+   WINDOW BODY (Main Content)
+   ============================================ */
+
+.window-body {
+  flex: 1;
+  padding: 20px;
+  box-sizing: border-box;
+  overflow: hidden;
+  background: #ffffff;
+}
+
+/* Error Message */
+.error-message {
+  display: flex;
+  gap: 10px;
+  padding: 12px 14px;
+  background: #f8d7da;
+  border: 1px solid #f5c6cb;
+  border-radius: 6px;
+  color: #721c24;
+  font-size: 13px;
+  margin-bottom: 16px;
+  align-items: flex-start;
+}
+
+.error-message span {
+  flex-shrink: 0;
+  font-size: 16px;
+}
+
+.error-message p {
+  margin: 0;
+  font-weight: 500;
+}
+
+/* Order Inputs */
+.order-inputs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.input-group label {
+  font-size: 12px;
+  font-weight: 600;
+  color: #333333;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.modern-input {
+  padding: 10px 12px;
+  border: 2px solid #e0e0e0;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  background: #ffffff;
+  color: #333333;
+  transition: all 0.2s ease;
+  outline: none;
+}
+
+.modern-input:focus {
+  border-color: #1976D2;
+  background: #f8fbff;
+  box-shadow: 0 0 0 3px rgba(25, 118, 210, 0.1);
+}
+
+.modern-input:disabled {
+  background: #f5f5f5;
+  color: #999999;
+  cursor: not-allowed;
+}
+
+.modern-input::placeholder {
+  color: #bdbdbd;
+}
+
+/* Price Input Wrapper */
+.price-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.currency {
+  position: absolute;
+  left: 12px;
+  font-weight: 600;
+  color: #666666;
+  font-size: 13px;
+}
+
+.price-input {
+  padding-left: 28px !important;
+}
+
+.input-hint {
+  font-size: 11px;
+  color: #999999;
+  font-weight: 400;
+  margin-top: 2px;
+}
+
+/* Order Summary */
+.order-summary {
+  background: #f8f9fa;
+  border-radius: 8px;
+  padding: 14px;
+  border: 1px solid #e9ecef;
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  font-size: 13px;
+}
+
+.summary-label {
+  color: #666666;
+  font-weight: 500;
+}
+
+.summary-value {
+  color: #333333;
+  font-weight: 600;
+  text-align: right;
+}
+
+.summary-divider {
+  height: 1px;
+  background: #dee2e6;
+  margin: 8px 0;
+}
+
+.summary-row.total {
+  padding-top: 10px;
+  padding-bottom: 8px;
+  border-top: 1px solid #dee2e6;
+  background: linear-gradient(90deg, transparent, rgba(25, 118, 210, 0.02));
+}
+
+.summary-row.total .summary-label {
+  color: #333333;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.total-value {
+  font-size: 16px !important;
+  font-weight: 700 !important;
+  color: #1976D2;
+}
+
+.sell-container .total-value {
+  color: #DC3545;
+}
+
+/* ============================================
+   WINDOW FOOTER (Buttons)
+   ============================================ */
+
+.window-footer {
+  padding: 16px;
+  box-sizing: border-box;
+  background: #f8f9fa;
+  border-top: 1px solid #e9ecef;
+  display: flex;
+  gap: 10px;
+}
+
+/* Button Base Styles */
+.btn {
+  flex: 1;
+  padding: 12px 16px;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  outline: none;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  white-space: nowrap;
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Primary Button (Buy) */
+.btn-primary,
+.buy-btn {
+  background: linear-gradient(135deg, #1976D2 0%, #1565C0 100%);
+  color: #ffffff;
+  box-shadow: 0 2px 8px rgba(25, 118, 210, 0.2);
+}
+
+.btn-primary:hover:not(:disabled),
+.buy-btn:hover:not(:disabled) {
+  background: linear-gradient(135deg, #1565C0 0%, #0d47a1 100%);
+  box-shadow: 0 4px 12px rgba(25, 118, 210, 0.3);
+  transform: translateY(-1px);
+}
+
+.btn-primary:active:not(:disabled),
+.buy-btn:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: 0 1px 4px rgba(25, 118, 210, 0.2);
+}
+
+/* Sell Button */
+.btn-sell,
+.sell-btn {
+  background: linear-gradient(135deg, #DC3545 0%, #C82333 100%);
+  color: #ffffff;
+  box-shadow: 0 2px 8px rgba(220, 53, 69, 0.2);
+}
+
+.btn-sell:hover:not(:disabled),
+.sell-btn:hover:not(:disabled) {
+  background: linear-gradient(135deg, #C82333 0%, #bd2130 100%);
+  box-shadow: 0 4px 12px rgba(220, 53, 69, 0.3);
+  transform: translateY(-1px);
+}
+
+.btn-sell:active:not(:disabled),
+.sell-btn:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: 0 1px 4px rgba(220, 53, 69, 0.2);
+}
+
+/* Secondary Button (Cancel) */
+.btn-secondary {
+  background: #e9ecef;
+  color: #495057;
+  border: 1px solid #dee2e6;
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background: #dee2e6;
+  color: #212529;
+  border-color: #adb5bd;
+}
+
+.btn-secondary:active:not(:disabled) {
+  background: #e2e6eb;
+}
+
+/* ============================================
+   LEGACY COMPATIBILITY (Old Classes)
+   ============================================ */
+
+.regular-order {
+  display: none;
+}
+
+.inputs {
+  display: none;
+}
+
+.buttons {
+  display: none;
+}
+
+.tab {
+  display: none;
+}
+
+.market-options {
+  display: none;
+}
+
+.order-validity {
+  display: none;
+}
+
+.options {
+  display: none;
+}
+
+.btn-blue {
+  display: none;
+}
+
+.btn-red {
+  display: none;
+}
+
+.btn-grey {
+  display: none;
+}
+
+/* New CSS Classes for Inline Styles */
+.live-badge {
+  font-size: 12px;
+  margin-left: 5px;
+  color: #2ecc71;
+}
+
+.modern-input.price-input.disabled,
+.modern-input:disabled {
+  background-color: #f0f0f0;
+  cursor: not-allowed;
+  opacity: 1;
+  color: #666;
+}
+
+.btn.disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ============================================
+   RESPONSIVE DESIGN
+   ============================================ */
+
+@media (max-width: 768px) {
+  .container {
+    width: 95%;
+    left: 2.5%;
+  }
+
+  .order-inputs {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .window-footer {
+    flex-direction: column;
+  }
+
+  .btn {
+    padding: 14px 12px;
+    font-size: 13px;
+  }
+}

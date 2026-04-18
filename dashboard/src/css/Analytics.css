@@ -1,0 +1,525 @@
+/* Analytics Component Styles */
+
+.analytics-container {
+  padding: 20px;
+}
+
+.analytics-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.analytics-header h2 {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.analytics-back-link {
+  text-decoration: none;
+  color: #1976D2;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.analytics-back-link:hover {
+  text-decoration: underline;
+}
+
+/* Chart Container */
+.analytics-chart-container {
+  margin-bottom: 30px;
+  padding: 0;
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid #e9ecef;
+}
+
+.analytics-chart-header {
+  padding: 20px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.analytics-price-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 15px;
+}
+
+.analytics-price {
+  font-size: 28px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 4px;
+}
+
+.analytics-price-change {
+  font-size: 13px;
+  margin-top: 10px;
+}
+
+.analytics-price-change.positive {
+  color: #4CAF50;
+}
+
+.analytics-price-change.negative {
+  color: #f44336;
+}
+
+.analytics-time-label {
+  font-size: 12px;
+  color: #999;
+  margin-bottom: 4px;
+}
+
+.analytics-period-buttons {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.period-btn {
+  padding: 6px 14px;
+  border: none;
+  border-radius: 4px;
+  background-color: transparent;
+  color: #999;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 400;
+  transition: all 0.2s ease;
+}
+
+.period-btn.active {
+  background-color: #f0f0f0;
+  color: #333;
+  font-weight: 600;
+}
+
+.period-btn:hover {
+  background-color: #f0f0f0;
+}
+
+/* Chart */
+.analytics-chart {
+  position: relative;
+  height: 350px;
+  padding: 0 20px 20px 20px;
+}
+
+/* Metrics Grid */
+.analytics-metrics {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.metric-card {
+  padding: 15px;
+  background: #fff;
+  border-radius: 8px;
+  text-align: center;
+  border: 2px solid #007bff;
+}
+
+.metric-card.success {
+  border-color: #28a745;
+}
+
+.metric-card.danger {
+  border-color: #dc3545;
+}
+
+.metric-card.muted {
+  border-color: #6c757d;
+}
+
+.metric-card-label {
+  font-size: 12px;
+  color: #666;
+  margin-bottom: 5px;
+  text-align: center;
+}
+
+.metric-card-value {
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.metric-card-value.primary {
+  color: #007bff;
+}
+
+.metric-card-value.success {
+  color: #28a745;
+}
+
+.metric-card-value.danger {
+  color: #dc3545;
+}
+
+/* Sector Breakdown */
+.sector-breakdown-section {
+  margin-bottom: 30px;
+}
+
+.sector-breakdown-section h4 {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 15px;
+  color: #333;
+}
+
+.pie-chart-container {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.pie-chart-svg {
+  width: 250px;
+  height: 250px;
+}
+
+.pie-chart-legend {
+  font-size: 12px;
+  flex: 1;
+}
+
+.pie-chart-legend-item {
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.pie-chart-color-box {
+  width: 12px;
+  height: 12px;
+  border-radius: 2px;
+}
+
+.sector-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+}
+
+.sector-card {
+  padding: 12px;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+}
+
+.sector-card-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.sector-card-name {
+  font-weight: 600;
+  color: #333;
+}
+
+.sector-card-percentage {
+  font-size: 12px;
+  color: #666;
+}
+
+.sector-card-value {
+  font-size: 12px;
+  margin-bottom: 5px;
+}
+
+.sector-card-pl {
+  font-size: 12px;
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+.sector-card-pl.positive {
+  color: #28a745;
+}
+
+.sector-card-pl.negative {
+  color: #dc3545;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 6px;
+  background-color: #f0f0f0;
+  border-radius: 3px;
+  margin-top: 8px;
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.3s ease;
+}
+
+.progress-bar-fill.positive {
+  background-color: #28a745;
+}
+
+.progress-bar-fill.negative {
+  background-color: #dc3545;
+}
+
+/* Top Gainers & Losers */
+.gainers-losers-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.gainers-table,
+.losers-table {
+  width: 100%;
+  font-size: 12px;
+  border-collapse: collapse;
+}
+
+.gainers-table h4,
+.losers-table h4 {
+  font-size: 14px;
+  margin-bottom: 20px;
+  margin-top: 0;
+}
+
+.gainers-table h4,
+.losers-table h4 {
+  font-size: 14px;
+  margin-bottom: 20px;
+  margin-top: 0;
+}
+.gainers-table h4 {
+  color: #28a745;
+}
+
+.losers-table h4 {
+  color: #dc3545;
+}
+
+.gainers-table thead tr,
+.losers-table thead tr {
+  border-bottom: 1px solid #ddd;
+}
+
+.gainers-table th,
+.losers-table th {
+  text-align: left;
+  padding-bottom: 8px;
+  font-weight: 600;
+  color: #666;
+}
+
+.gainers-table tbody tr,
+.losers-table tbody tr {
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.gainers-table tbody tr td {
+  padding-top: 8px;
+  color: #28a745;
+}
+
+.losers-table tbody tr td {
+  padding-top: 8px;
+  color: #dc3545;
+}
+
+.gainers-table td:nth-child(2),
+.gainers-table td:nth-child(3),
+.losers-table td:nth-child(2),
+.losers-table td:nth-child(3) {
+  text-align: right;
+}
+
+.gainers-table .percent,
+.losers-table .percent {
+  font-weight: 600;
+}
+
+/* Portfolio Info Cards */
+.portfolio-info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.info-card {
+  padding: 15px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  border: 1px solid #dee2e6;
+}
+
+.info-card h4 {
+  margin: 0 0 8px 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+}
+
+.info-card-value {
+  font-size: 18px;
+  font-weight: bold;
+  color: #1976D2;
+  margin-bottom: 10px;
+}
+
+.info-card-description {
+  font-size: 12px;
+  color: #666;
+  line-height: 1.5;
+}
+
+.portfolio-weight-bar {
+  width: 100%;
+  height: 8px;
+  background-color: #e9ecef;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-top: 10px;
+}
+
+.portfolio-weight-bar-fill {
+  height: 100%;
+  background-color: #1976D2;
+  border-radius: 4px;
+}
+
+/* Stock Details Modal */
+.stock-details-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.stock-details-content {
+  background: white;
+  border-radius: 12px;
+  padding: 30px;
+  max-width: 600px;
+  width: 90%;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .analytics-metrics {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .sector-cards-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .gainers-losers-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .portfolio-info-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+.portfolio-section {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.sector-breakdown {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+}
+
+.sector-card {
+  padding: 15px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  border-left: 4px solid #1976D2;
+}
+
+.gainers-losers-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.gainers-section,
+.losers-section {
+  background: #f8f9fa;
+  padding: 15px;
+  border-radius: 8px;
+}
+
+.gainers-section h4 {
+  color: #28a745;
+  margin-bottom: 12px;
+}
+
+.losers-section h4 {
+  color: #dc3545;
+  margin-bottom: 12px;
+}
+
+.gainers-table,
+.losers-table {
+  width: 100%;
+  font-size: 12px;
+  border-collapse: collapse;
+}
+
+.gainers-table th,
+.losers-table th {
+  text-align: left;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #ddd;
+}
+
+.gainers-table th:nth-child(2),
+.gainers-table th:nth-child(3),
+.losers-table th:nth-child(2),
+.losers-table th:nth-child(3) {
+  text-align: right;
+}
+
+.gainers-table tbody tr,
+.losers-table tbody tr {
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.gainers-table tbody tr {
+  color: #28a745;
+}
+
+.losers-table tbody tr {
+  color: #dc3545;
+}

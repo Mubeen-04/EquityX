@@ -1,0 +1,81 @@
+/* Debug Component Styles */
+
+.debug-panel {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: white;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  padding: 15px;
+  width: 300px;
+  max-height: 400px;
+  overflow-y: auto;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  z-index: 999;
+  font-size: 12px;
+  font-family: 'Courier New', monospace;
+}
+
+.debug-header {
+  font-weight: 700;
+  margin-bottom: 10px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #ddd;
+  color: #333;
+}
+
+.debug-item {
+  margin-bottom: 8px;
+  padding: 8px;
+  background: #f9f9f9;
+  border-radius: 4px;
+  border-left: 3px solid #1976D2;
+}
+
+.debug-label {
+  font-weight: 600;
+  color: #555;
+}
+
+.debug-value {
+  color: #333;
+  margin-top: 4px;
+}
+
+.debug-value.success {
+  color: #28a745;
+}
+
+.debug-value.error {
+  color: #dc3545;
+}
+
+.debug-value.warning {
+  color: #ffc107;
+}
+
+/* Debug Container Styles */
+.debug-container {
+  padding: 40px;
+  font-family: monospace;
+  line-height: 1.8;
+}
+
+.debug-container h2 {
+  margin-top: 0;
+  color: #333;
+}
+
+.debug-status {
+  font-size: 16px;
+  margin-top: 15px;
+}
+
+.debug-status.authenticated {
+  color: green;
+}
+
+.debug-status.not-authenticated {
+  color: red;
+}

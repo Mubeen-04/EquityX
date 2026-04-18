@@ -1,0 +1,229 @@
+/* Summary Component Styles */
+
+.username h6 {
+  font-size: 1.5rem;
+  font-weight: 400;
+  color: rgb(83, 83, 83);
+  margin-bottom: 20px;
+}
+
+.section {
+  padding-bottom: 2%;
+}
+
+.section span {
+  display: flex;
+  align-items: center;
+  margin-bottom: 2%;
+}
+
+.section span p {
+  display: inline-block;
+  font-size: 1.2rem;
+  font-weight: 300;
+}
+
+.section-icon {
+  transform: scale(0.8);
+  color: rgb(112, 112, 112);
+  padding: 0;
+  margin: 0;
+  margin-right: 10px;
+}
+
+.divider {
+  border: none;
+  background: #d1d1d1;
+  height: 1px;
+  margin: 20px 0;
+  margin-bottom: 5%;
+}
+
+.data {
+  width: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.data .first h3 {
+  font-size: 2.5rem;
+  font-weight: 300;
+  color: rgb(71, 71, 71);
+}
+
+.data .first p {
+  font-size: 0.8rem;
+  color: rgb(136, 136, 136);
+}
+
+.data .first small {
+  font-size: 0.8rem;
+}
+
+.data .first .profit {
+  color: rgb(72, 194, 55);
+}
+
+.data .first .loss {
+  color: rgb(252, 0, 0);
+}
+
+.data hr {
+  border-left: 0.6px solid rgb(243, 242, 242);
+  height: 70px;
+}
+
+.data .second p {
+  font-size: 0.8rem;
+  color: rgb(136, 136, 136);
+  margin-bottom: 10px;
+  white-space: nowrap;
+}
+
+.data .second p span {
+  display: inline;
+  margin-left: 5%;
+  font-size: 0.9rem;
+  color: rgb(100, 100, 100);
+}
+
+.section hr {
+  margin-top: 6%;
+}
+
+/* Add Funds Button */
+.add-funds-btn {
+  margin-top: 12px;
+  padding: 8px 16px;
+  background: #2ecc71;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 600;
+  transition: all 0.2s;
+}
+
+.add-funds-btn:hover {
+  background: #27ae60;
+}
+
+/* Top Gainers & Losers Table */
+.gainers-losers-section {
+  margin-top: 40px;
+}
+
+.gainers-losers-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.gainers-table,
+.losers-table {
+  background: white;
+  padding: 16px;
+  border-radius: 8px;
+  border: 1px solid #e9ecef;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.gainers-table h4 {
+  font-size: 14px;
+  color: #28a745;
+  margin-bottom: 16px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.losers-table h4 {
+  font-size: 14px;
+  color: #dc3545;
+  margin-bottom: 16px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.gainers-table table,
+.losers-table table {
+  width: 100%;
+  font-size: 13px;
+  border-collapse: collapse;
+}
+
+.gainers-table thead tr,
+.losers-table thead tr {
+  border-bottom: 2px solid #e9ecef;
+}
+
+.gainers-table th,
+.losers-table th {
+  text-align: left;
+  padding: 12px 8px;
+  font-weight: 600;
+  color: #666;
+  background-color: #f8f9fa;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.gainers-table th:nth-child(2),
+.gainers-table th:nth-child(3),
+.losers-table th:nth-child(2),
+.losers-table th:nth-child(3) {
+  text-align: right;
+}
+
+.gainers-table tbody tr,
+.losers-table tbody tr {
+  border-bottom: 1px solid #f0f0f0;
+  transition: background-color 0.2s ease;
+}
+
+.gainers-table tbody tr:hover,
+.losers-table tbody tr:hover {
+  background-color: #f8f9fa;
+}
+
+.gainers-table tbody tr td {
+  padding: 12px 8px;
+  color: #28a745;
+  font-weight: 500;
+}
+
+.losers-table tbody tr td {
+  padding: 12px 8px;
+  color: #dc3545;
+  font-weight: 500;
+}
+
+.gainers-table tbody tr td:first-child,
+.losers-table tbody tr td:first-child {
+  font-weight: 600;
+  color: #333;
+}
+
+.gainers-table tbody tr td:nth-child(2),
+.gainers-table tbody tr td:nth-child(3),
+.losers-table tbody tr td:nth-child(2),
+.losers-table tbody tr td:nth-child(3) {
+  text-align: right;
+}
+
+.gainers-table .percent,
+.losers-table .percent {
+  font-weight: 700;
+}
+
+.no-data-msg {
+  color: #666;
+  font-size: 12px;
+  margin: 0;
+}

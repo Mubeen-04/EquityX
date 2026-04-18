@@ -1,0 +1,86 @@
+/* ============================================
+   GLOBAL STYLES - index.css
+   Only contains truly global element styles
+   Component-specific styles are in individual CSS files
+   ============================================ */
+
+/* Root & Global Element Styles */
+body {
+  margin: 0;
+  font-family: 'Times New Roman', serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: #ffffff;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* ============================================
+   RESPONSIVE BREAKPOINTS
+   ============================================ */
+
+/* Tablets (max-width: 1024px) */
+@media (max-width: 1024px) {
+  body {
+    font-size: 14px;
+  }
+}
+
+/* Mobile Devices (max-width: 768px) */
+@media (max-width: 768px) {
+  body {
+    font-size: 13px;
+  }
+
+  /* Forms and inputs */
+  input[type="text"],
+  input[type="number"],
+  select,
+  textarea {
+    font-size: 16px !important;
+    padding: 12px !important;
+    width: 100% !important;
+  }
+
+  /* Buttons - Larger touch targets */
+  button {
+    padding: 10px 15px !important;
+    font-size: 0.85rem !important;
+    min-height: 44px;
+  }
+}
+
+/* Small Mobile (max-width: 480px) */
+@media (max-width: 480px) {
+  body {
+    font-size: 12px;
+  }
+
+  /* Button sizing for small screens */
+  button {
+    padding: 8px 12px !important;
+    font-size: 0.8rem !important;
+    min-height: 40px;
+  }
+
+  /* Input sizing */
+  input[type="text"],
+  input[type="number"],
+  select,
+  textarea {
+    font-size: 14px !important;
+    padding: 10px !important;
+  }
+}
