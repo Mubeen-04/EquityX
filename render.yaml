@@ -3,8 +3,8 @@ services:
     name: zerodha-app
     runtime: node
     plan: free
-    buildCommand: "npm install --prefix frontend && npm install --prefix dashboard && npm install --prefix backend && npm run build --prefix backend"
-    startCommand: "npm start --prefix backend"
+    buildCommand: "npm install && npm install --prefix ../frontend && npm install --prefix ../dashboard && npm run build"
+    startCommand: "npm start"
     envVars:
       - key: NODE_ENV
         value: production
