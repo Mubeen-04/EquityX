@@ -97,10 +97,10 @@ const Summary = () => {
 
           <div className="second">
             <p>
-              Total Equity <span>₹{formatNumber(totalEquity)}</span>{" "}
+              Total Equity: <span>₹{formatNumber(totalEquity)}</span>{" "}
             </p>
             <p>
-              Invested <span>₹{formatNumber(investedAmount)}</span>{" "}
+              Invested: <span>₹{formatNumber(totalInvestment)}</span>{" "}
             </p>
           </div>
         </div>
@@ -123,10 +123,10 @@ const Summary = () => {
 
           <div className="second">
             <p>
-              Current Value <span>{formatNumber(totalCurrentValue)}</span>{" "}
+              Current Value: <span>{formatNumber(totalCurrentValue)}</span>{" "}
             </p>
             <p>
-              Investment <span>{formatNumber(totalInvestment)}</span>{" "}
+              Investment: <span>{formatNumber(totalInvestment)}</span>{" "}
             </p>
           </div>
         </div>
