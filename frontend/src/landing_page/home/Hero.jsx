@@ -170,11 +170,11 @@ const ChartPanel = ({ niftyData, priceHistory, timeLabels }) => {
       </div>
 
       <div className="mini-stats">
-        <div className="mini-stat">
-          <div className="mini-stat-label">OPEN</div>
-          <div className="mini-stat-val">{typeof niftyData.openPrice === "number" ? niftyData.openPrice.toFixed(2) : niftyData.openPrice || "—"}</div>
+        <div className="mini-stat">DAY HIGH</div>
+          <div className="mini-stat-val up">{typeof niftyData.high === "number" ? niftyData.high.toFixed(2) : "—"}</div>
         </div>
         <div className="mini-stat">
+          <div className="mini-stat-label">DAY
           <div className="mini-stat-label">HIGH</div>
           <div className="mini-stat-val up">{typeof niftyData.high === "number" ? niftyData.high.toFixed(2) : "—"}</div>
         </div>
