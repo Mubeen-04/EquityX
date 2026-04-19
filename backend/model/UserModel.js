@@ -17,9 +17,13 @@ const userSchema = new mongoose.Schema(
     },
     phone: {
       type: String,
+      unique: true,
+      sparse: true,
     },
     pan: {
       type: String,
+      unique: true,
+      sparse: true,
     },
     balance: {
       type: Number,

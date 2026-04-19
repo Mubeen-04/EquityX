@@ -602,10 +602,26 @@ app.post("/signup", async (req, res) => {
       return res.status(400).json({ msg: "Email and password required" });
     }
 
-    // Check if user exists
-    const existingUser = await UserModel.findOne({ email });
-    if (existingUser) {
-      return res.status(400).json({ msg: "User already exists" });
+    // Check if user exists by email
+    const existingEmail = await UserModel.findOne({ email });
+    if (existingEmail) {
+      return res.status(400).json({ msg: "Email already registered" });
+    }
+
+    // Check if phone already exists (if provided)
+    if (phone) {
+      const existingPhone = await UserModel.findOne({ phone });
+      if (existingPhone) {
+        return res.status(400).json({ msg: "Mobile number already registered" });
+      }
+    }
+
+    // Check if PAN already exists (if provided)
+    if (pan) {
+      const existingPan = await UserModel.findOne({ pan });
+      if (existingPan) {
+        return res.status(400).json({ msg: "PAN card already registered" });
+      }
     }
 
     // Hash password
@@ -616,14 +632,20 @@ app.post("/signup", async (req, res) => {
       email,
       password: hashedPassword,
       name: name || "User",
-      phone: phone || "",
-      pan: pan || "",
+      phone: phone || null,
+      pan: pan || null,
     });
 
     await user.save();
 
     res.status(201).json({ msg: "User created successfully", userId: user._id, name: user.name, email: user.email });
   } catch (error) {
+    // Handle MongoDB duplicate key errors
+    if (error.code === 11000) {
+      const field = Object.keys(error.keyPattern)[0];
+      const fieldName = field === 'email' ? 'Email' : field === 'phone' ? 'Mobile number' : field === 'pan' ? 'PAN card' : 'Field';
+      return res.status(400).json({ msg: `${fieldName} already registered` });
+    }
     res.status(500).json({ msg: "Server error", error: error.message });
   }
 });
