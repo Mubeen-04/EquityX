@@ -54,7 +54,9 @@ export const RealTimeProvider = ({ children }) => {
       setIndices(indicesData);
       setLastUpdate(new Date());
 
-      // Cache the fresh data
+      // Cache the fresh data with user-specific key to prevent data leaking between users
+      const userId = localStorage.getItem("userId");
+      const cacheKey = userId ? `tradingAppCache_${userId}` : "tradingAppCache";
       const cacheData = {
         holdings: holdingsData,
         positions: positionsData,
@@ -63,7 +65,7 @@ export const RealTimeProvider = ({ children }) => {
         indices: indicesData,
         timestamp: new Date().toISOString(),
       };
-      localStorage.setItem("tradingAppCache", JSON.stringify(cacheData));
+      localStorage.setItem(cacheKey, JSON.stringify(cacheData));
 
       console.log(`Polling successful - ${holdingsData.length || 0} holdings, ${positionsData.length || 0} positions, ${Object.keys(marketPricesData).length || 0} market stocks, indices updated`);
     } catch (err) {
@@ -81,7 +83,9 @@ export const RealTimeProvider = ({ children }) => {
     // Load cached data first
     const loadCachedData = () => {
       try {
-        const cached = localStorage.getItem("tradingAppCache");
+        const userId = localStorage.getItem("userId");
+        const cacheKey = userId ? `tradingAppCache_${userId}` : "tradingAppCache";
+        const cached = localStorage.getItem(cacheKey);
         if (cached) {
           const { holdings: cachedHoldings, positions: cachedPositions, orders: cachedOrders, indices: cachedIndices, marketPrices: cachedMarketPrices } = JSON.parse(cached);
           setHoldings(cachedHoldings || []);
@@ -89,7 +93,7 @@ export const RealTimeProvider = ({ children }) => {
           setOrders(cachedOrders || []);
           setIndices(cachedIndices || {});
           setMarketPrices(cachedMarketPrices || {});
-          console.log("Cached data loaded (including market prices)");
+          console.log(`Cached data loaded for userId ${userId} (including market prices)`);
         }
       } catch (err) {
         console.warn("Failed to load cached data:", err);
