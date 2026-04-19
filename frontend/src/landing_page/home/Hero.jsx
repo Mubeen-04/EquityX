@@ -360,7 +360,8 @@ function Hero() {
                       const email = localStorage.getItem("email");
                       const name = localStorage.getItem("name");
                       const userId = localStorage.getItem("userId");
-                      const dashboardUrl = new URL("http://localhost:3001");
+                      const isDev = window.location.hostname === "localhost";
+                      const dashboardUrl = new URL(isDev ? "http://localhost:3001" : `${window.location.origin}/dashboard`);
                       dashboardUrl.searchParams.set("token", token);
                       dashboardUrl.searchParams.set("email", email);
                       dashboardUrl.searchParams.set("name", name);

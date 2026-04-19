@@ -28,7 +28,8 @@ function Login() {
         localStorage.setItem("email", res.data.email);
         localStorage.setItem("name", res.data.name);
         // Redirect to dashboard folder application
-        const dashboardUrl = new URL("http://localhost:3001");
+        const isDev = window.location.hostname === "localhost";
+        const dashboardUrl = new URL(isDev ? "http://localhost:3001" : `${window.location.origin}/dashboard`);
         dashboardUrl.searchParams.set("token", res.data.token);
         dashboardUrl.searchParams.set("email", res.data.email);
         dashboardUrl.searchParams.set("name", res.data.name);
