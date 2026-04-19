@@ -106,11 +106,15 @@ export const RealTimeProvider = ({ children }) => {
     const initData = async () => {
       try {
         const userId = localStorage.getItem("userId");
-        const [holdingsRes, positionsRes, ordersRes, indicesRes, balanceRes] = await Promise.all([
+        const [holdingsRes, positionsRes, ordersRes, indicesRes, marketPricesRes, balanceRes] = await Promise.all([
           getHoldings(),
           getPositions(),
           getOrders(),
           getIndices(),
+          getMarketPrices().catch(e => {
+            console.error("Error fetching market prices:", e);
+            return { data: {} };
+          }),
           userId ? getUserBalance(userId) : Promise.resolve({ data: { balance: 100000 } }),
         ]);
         const newData = {
@@ -118,11 +122,13 @@ export const RealTimeProvider = ({ children }) => {
           positions: positionsRes.data || [],
           orders: ordersRes.data || [],
           indices: indicesRes.data || {},
+          marketPrices: marketPricesRes.data || {},
         };
         setHoldings(newData.holdings);
         setPositions(newData.positions);
         setOrders(newData.orders);
         setIndices(newData.indices);
+        setMarketPrices(newData.marketPrices);
         setBalance(balanceRes.data.balance || 100000);
         
         // Cache the data with user-specific key to prevent data leaking between users
@@ -130,7 +136,7 @@ export const RealTimeProvider = ({ children }) => {
         localStorage.setItem(cacheKey, JSON.stringify(newData));
         
         setIsInitialized(true);
-        console.log("Initial data loaded and cached, Balance: ₹" + (balanceRes.data.balance || 100000));
+        console.log("Initial data loaded and cached, Balance: ₹" + (balanceRes.data.balance || 100000) + ", Market prices: " + Object.keys(newData.marketPrices).length + " stocks");
       } catch (err) {
         console.error("Failed to load initial data:", err);
         setIsInitialized(true); // Show page even if initial data fails
