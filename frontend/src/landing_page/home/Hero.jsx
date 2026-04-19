@@ -204,7 +204,7 @@ function Hero() {
     return () => clearInterval(interval);
   }, []);
 
-  // Sync chart's last price point with the actual current price AND re-initialize on every API update
+  // Initialize historical price data for NIFTY 50 (same logic as Analytics)
   useEffect(() => {
     if (niftyData.price === 0) return;
 
@@ -214,51 +214,58 @@ function Hero() {
       updateIntervalRef.current = null;
     }
 
-    // Re-initialize price history from 9 AM to now with the actual current price
+    const historicalPrices = [];
+    const historicalLabels = [];
+    
     const now = new Date();
     const startOfDay = new Date(now);
     startOfDay.setHours(9, 0, 0, 0); // 9 AM
     
+    // If current time is before 9 AM, start from yesterday's 9 AM
     if (now < startOfDay) {
       startOfDay.setDate(startOfDay.getDate() - 1);
     }
     
-    const openPrice = niftyData.openPrice || niftyData.price;
-    const targetPrice = niftyData.price;
-    const historicalPrices = [openPrice];
-    const historicalLabels = [];
+    // Start with realistic price variation (±5% from current price)
+    let currentPrice = niftyData.price * (0.95 + Math.random() * 0.1);
+    const timeInterval = (now.getTime() - startOfDay.getTime()) / 60000; // minutes passed
     
-    const timeInterval = (now.getTime() - startOfDay.getTime()) / 60000;
-    historicalLabels.push(startOfDay.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }));
-    
-    // Build a smooth realistic price path from opening to current
-    const totalPoints = Math.min(Math.ceil(timeInterval), 200);
-    const priceRange = targetPrice - openPrice;
-    
-    for (let i = 1; i < totalPoints; i++) {
-      // Calculate the ideal price movement at this point in time
-      const timeProgress = i / totalPoints;
-      
-      // Base movement follows the trend smoothly
-      const idealPrice = openPrice + priceRange * timeProgress;
-      
-      // Add minimal realistic variation (±0.08%) for natural look
-      const randomVariation = (Math.random() - 0.5) * 0.0016; // ±0.08%
-      const priceWithVariation = idealPrice * (1 + randomVariation);
-      
-      historicalPrices.push(priceWithVariation);
-      const time = new Date(startOfDay.getTime() + i * (timeInterval / totalPoints) * 60000);
+    // Generate 1 data point per minute from 9 AM to now
+    for (let i = 0; i <= timeInterval && i < 400; i++) { // Max 400 points
+      historicalPrices.push(currentPrice);
+      const time = new Date(startOfDay.getTime() + i * 60000);
       historicalLabels.push(time.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }));
+      
+      // More realistic price movement: ±0.4% to +2% per minute (same as Analytics)
+      const changePercent = (Math.random() - 0.4) * 3; // -0.4% to +2%
+      currentPrice = currentPrice * (1 + changePercent / 100);
     }
-    
-    // Ensure the last price matches the current NIFTY price exactly
-    historicalPrices.push(targetPrice);
-    historicalLabels.push(now.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }));
     
     setPriceHistory(historicalPrices);
     setTimeLabels(historicalLabels);
-    
-  }, [niftyData.price, niftyData.openPrice]);
+
+    // Update price every 2 seconds with new data - realistic variation
+    updateIntervalRef.current = setInterval(() => {
+      setPriceHistory((prev) => {
+        if (prev.length === 0) return prev;
+        const lastPrice = prev[prev.length - 1];
+        const changePercent = (Math.random() - 0.4) * 3; // -0.4% to +2%
+        const newPrice = lastPrice * (1 + changePercent / 100);
+        return [...prev, newPrice].slice(-400); // Keep last 400 points
+      });
+
+      setTimeLabels((prev) => {
+        const updated = [...prev, new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })].slice(-400);
+        return updated;
+      });
+    }, 2000);
+
+    return () => {
+      if (updateIntervalRef.current) {
+        clearInterval(updateIntervalRef.current);
+      }
+    };
+  }, [niftyData.price]);
 
   const fetchLiveData = async () => {
     try {
