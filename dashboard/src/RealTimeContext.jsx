@@ -101,7 +101,7 @@ export const RealTimeProvider = ({ children }) => {
     };
 
     loadCachedData();
-
+    setIsInitialized(true); 
     // Fetch fresh data on mount
     const initData = async () => {
       try {
