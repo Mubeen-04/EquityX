@@ -227,23 +227,29 @@ function Hero() {
     }
     
     const openPrice = niftyData.openPrice || niftyData.price;
-    let currentPrice = openPrice;
+    const currentNiftyPrice = niftyData.price;
     const timeInterval = (now.getTime() - startOfDay.getTime()) / 60000; // minutes passed
+    const totalPoints = Math.min(Math.ceil(timeInterval), 400);
     
-    // Generate 1 data point per minute from 9 AM to now
-    for (let i = 0; i <= timeInterval && i < 400; i++) { // Max 400 points
-      historicalPrices.push(currentPrice);
-      const time = new Date(startOfDay.getTime() + i * 60000);
-      historicalLabels.push(time.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }));
+    // Build smooth price path from opening to current
+    let currentPrice = openPrice;
+    for (let i = 0; i <= totalPoints && i < 400; i++) {
+      // Smooth interpolation: gradually move from open to current
+      const progress = totalPoints > 0 ? i / totalPoints : 0;
+      const interpolatedPrice = openPrice + (currentNiftyPrice - openPrice) * progress;
       
-      // More realistic price movement: ±0.4% to +2% per minute (same as Analytics)
-      const changePercent = (Math.random() - 0.4) * 3; // -0.4% to +2%
-      currentPrice = currentPrice * (1 + changePercent / 100);
+      // Add realistic variation (±0.4% to +2%)
+      const changePercent = (Math.random() - 0.4) * 3;
+      currentPrice = interpolatedPrice * (1 + changePercent / 100);
+      
+      historicalPrices.push(currentPrice);
+      const time = new Date(startOfDay.getTime() + (i / totalPoints) * timeInterval * 60000);
+      historicalLabels.push(time.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }));
     }
     
-    // Adjust last point to match current price exactly
+    // Ensure last point is current price
     if (historicalPrices.length > 0) {
-      historicalPrices[historicalPrices.length - 1] = niftyData.price;
+      historicalPrices[historicalPrices.length - 1] = currentNiftyPrice;
     }
     
     setPriceHistory(historicalPrices);
