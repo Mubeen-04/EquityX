@@ -88,6 +88,19 @@ function Navbar() {
             {isLoggedIn ? (
               <>
                 <li className="nav-item">
+                  <a
+                    href="/dashboard"
+                    className="nav-link"
+                    style={{ 
+                      color: "#1976d2",
+                      fontWeight: "600",
+                      marginRight: "10px"
+                    }}
+                  >
+                    📊 Dashboard
+                  </a>
+                </li>
+                <li className="nav-item">
                   <span className="nav-link" style={{ cursor: "default", marginRight: "10px" }}>
                     👤 {userName}
                   </span>

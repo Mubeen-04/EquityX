@@ -24,12 +24,41 @@ const Menu = () => {
     window.location.href = "/";
   };
 
+  const handleGoHome = () => {
+    window.location.href = "/";
+  };
+
   const menuClass = "menu";
   const activeMenuClass = "menu selected";
   const displayName = localStorage.getItem("name") || "User";
 
   return (
     <div className="menu-container">
+      {/* Logo/Home Link */}
+      <div style={{ 
+        padding: "16px 20px",
+        borderBottom: "1px solid #e9ecef",
+        cursor: "pointer",
+        display: "flex",
+        alignItems: "center",
+        gap: "8px"
+      }}>
+        <button
+          onClick={handleGoHome}
+          style={{
+            backgroundColor: "transparent",
+            border: "none",
+            fontSize: "20px",
+            fontWeight: "700",
+            color: "#1976d2",
+            cursor: "pointer",
+            padding: "0"
+          }}
+          title="Go to Home page"
+        >
+          ← Back to Home
+        </button>
+      </div>
       
       <div className="menu-right-section">
         <div className="menus">

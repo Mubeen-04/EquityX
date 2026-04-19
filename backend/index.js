@@ -73,11 +73,20 @@ const verifyToken = (req, res, next) => {
 
 // ============ EMAIL CONFIGURATION ============
 const transporter = nodemailer.createTransport({
-  service: "outlook",
+  service: "gmail",
   auth: {
-    user: process.env.EMAIL_USER || "mubeen-projects@outlook.com",
+    user: process.env.EMAIL_USER || "mubeen.shaikh.codes@gmail.com",
     pass: process.env.EMAIL_PASSWORD,
   },
+});
+
+// Verify email configuration on startup
+transporter.verify((error, success) => {
+  if (error) {
+    console.error("❌ Email transporter error:", error.message);
+  } else {
+    console.log("✅ Email transporter ready - emails can be sent");
+  }
 });
 
 // Helper function to send email
@@ -91,11 +100,14 @@ const sendEmail = async (to, subject, text, html) => {
       html: html || text,
     };
 
+    console.log(`📧 Attempting to send email to: ${to}`);
     const info = await transporter.sendMail(mailOptions);
-    console.log("✉️ Email sent:", info.response);
-    return { success: true, message: "Email sent successfully" };
+    console.log("✉️ Email sent successfully:", info.messageId);
+    return { success: true, message: "Email sent successfully", messageId: info.messageId };
   } catch (error) {
     console.error("❌ Email sending failed:", error.message);
+    console.error("Email error code:", error.code);
+    console.error("Email error details:", error);
     return { success: false, error: error.message };
   }
 };
@@ -1267,11 +1279,17 @@ setTimeout(() => {
 
 // ============ SUPPORT TICKETS ============
 
-// Submit a new support ticket (public endpoint - no auth required)
+// Submit a new support ticket (REQUIRES AUTHENTICATION)
 app.post("/submitTicket", verifyToken, async (req, res) => {
   try {
     const { name, email, category, message } = req.body;
     const userId = req.userId; // Extract from token
+
+    // Ensure user is authenticated
+    if (!userId) {
+      console.warn("⚠️ Unauthenticated ticket submission attempt");
+      return res.status(401).json({ msg: "Authentication required. Please login to submit a ticket." });
+    }
 
     // Validation
     if (!name || !email || !category || !message) {
@@ -1315,7 +1333,7 @@ app.post("/submitTicket", verifyToken, async (req, res) => {
 
     // Send admin notification
     await sendEmail(
-      "mubeen-projects@outlook.com",
+      process.env.EMAIL_USER,
       adminEmailSubject,
       `New Support Ticket: ${category}\n\nTicket ID: ${newTicket._id}\nName: ${name}\nEmail: ${email}\n\nMessage:\n${message}`,
       adminEmailHtml
@@ -1353,6 +1371,39 @@ app.post("/submitTicket", verifyToken, async (req, res) => {
   } catch (error) {
     console.error("Ticket submission error:", error);
     res.status(500).json({ msg: "Error submitting ticket" });
+  }
+});
+
+// Test email endpoint - send test email to verify configuration
+app.get("/test-email", async (req, res) => {
+  try {
+    const testEmail = process.env.EMAIL_USER || "mubeen.shaikh.codes@gmail.com";
+    const result = await sendEmail(
+      testEmail,
+      "EquityX Test Email",
+      "This is a test email to verify the email configuration is working correctly.",
+      "<h2>EquityX Test Email</h2><p>If you received this, the email configuration is working correctly!</p>"
+    );
+
+    if (result.success) {
+      res.json({
+        success: true,
+        message: "Test email sent successfully",
+        messageId: result.messageId,
+      });
+    } else {
+      res.status(500).json({
+        success: false,
+        error: result.error,
+        message: "Failed to send test email",
+      });
+    }
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      error: error.message,
+      message: "Error sending test email",
+    });
   }
 });
 
