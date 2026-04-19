@@ -238,8 +238,8 @@ function Hero() {
       const progress = totalPoints > 0 ? i / totalPoints : 0;
       const interpolatedPrice = openPrice + (currentNiftyPrice - openPrice) * progress;
       
-      // Add realistic variation (±0.4% to +2%)
-      const changePercent = (Math.random() - 0.4) * 3;
+      // Add realistic micro-variation (±0.05%) — tiny noise around the trend
+      const changePercent = (Math.random() - 0.5) * 0.1;
       currentPrice = interpolatedPrice * (1 + changePercent / 100);
       
       historicalPrices.push(currentPrice);
@@ -260,7 +260,7 @@ function Hero() {
       setPriceHistory((prev) => {
         if (prev.length === 0) return prev;
         const lastPrice = prev[prev.length - 1];
-        const changePercent = (Math.random() - 0.4) * 3; // -0.4% to +2%
+        const changePercent = (Math.random() - 0.5) * 0.12; // ±0.06% per tick — realistic
         const newPrice = lastPrice * (1 + changePercent / 100);
         return [...prev, newPrice].slice(-400); // Keep last 400 points
       });
