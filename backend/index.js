@@ -75,6 +75,17 @@ const verifyToken = (req, res, next) => {
 // Auto-seed database with sample data if empty
 const seedDatabase = async () => {
   try {
+    // Clean up: DELETE all holdings and positions without userId (old corrupted data)
+    const deletedHoldings = await HoldingsModel.deleteMany({ userId: { $exists: false } });
+    if (deletedHoldings.deletedCount > 0) {
+      console.log(`🗑️ Deleted ${deletedHoldings.deletedCount} holdings without userId`);
+    }
+    
+    const deletedPositions = await PositionsModel.deleteMany({ userId: { $exists: false } });
+    if (deletedPositions.deletedCount > 0) {
+      console.log(`🗑️ Deleted ${deletedPositions.deletedCount} positions without userId`);
+    }
+
     const holdingCount = await HoldingsModel.countDocuments();
     const positionCount = await PositionsModel.countDocuments();
 
