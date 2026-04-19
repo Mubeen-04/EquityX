@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useState, useCallback } from "react";
 import io from "socket.io-client";
-import { getHoldings, getPositions, getOrders, getIndices, getUserBalance } from "./api";
+import { getHoldings, getPositions, getOrders, getIndices, getMarketPrices, getUserBalance } from "./api";
 
 const RealTimeContext = createContext();
 
@@ -34,9 +34,9 @@ export const RealTimeProvider = ({ children }) => {
         getHoldings(),
         getPositions(),
         getOrders(),
-        fetch(`${import.meta.env.VITE_API_URL || "http://localhost:5000"}/marketPrices`).then(r => r.json()).catch(e => {
+        getMarketPrices().catch(e => {
           console.error("Error fetching market prices:", e);
-          return {};
+          return { data: {} };
         }),
         getIndices(),
       ]);
@@ -44,7 +44,7 @@ export const RealTimeProvider = ({ children }) => {
       const holdingsData = holdingsRes.data || [];
       const positionsData = positionsRes.data || [];
       const ordersData = ordersRes.data || [];
-      const marketPricesData = marketPricesRes || {};
+      const marketPricesData = marketPricesRes.data || {};
       const indicesData = indicesRes.data || {};
 
       setHoldings(holdingsData);

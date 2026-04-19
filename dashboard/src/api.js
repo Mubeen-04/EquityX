@@ -1,8 +1,11 @@
 import axios from "axios";
 
-// Create API instance with no baseURL - use relative paths
-// This will work on any domain (localhost:3001, equityx.onrender.com, etc)
-const API = axios.create();
+// Create API instance with baseURL
+// Development: http://localhost:5000 (backend runs separately)
+// Production: relative URL / (backend serves both)
+const API = axios.create({
+  baseURL: import.meta.env.VITE_API_URL || "http://localhost:5000"
+});
 
 // Add token to headers if it exists
 API.interceptors.request.use((config) => {
@@ -42,6 +45,8 @@ export const getPaymentStatus = (paymentIntentId) => API.get(`/payment-status/${
 
 // Indices APIs
 export const getIndices = () => API.get("/indices");
+
+export const getMarketPrices = () => API.get("/marketPrices");
 
 // Favorites APIs
 export const getFavorites = () => API.get("/favorites");
