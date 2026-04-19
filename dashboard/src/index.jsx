@@ -34,7 +34,7 @@ root.render(
     <SnackbarProvider>
       <RealTimeProvider>
         <FavoritesProvider>
-          <BrowserRouter>
+          <BrowserRouter basename="/dashboard">
             <Routes>
               <Route path="/*" element={<Home />} />
             </Routes>
