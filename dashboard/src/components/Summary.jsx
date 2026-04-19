@@ -79,7 +79,7 @@ const Summary = () => {
 
       <div className="section">
         <span>
-          <p>Equity</p>
+          <p>Wallet</p>
         </span>
 
         <div className="data">
@@ -95,14 +95,6 @@ const Summary = () => {
           </div>
           <hr />
 
-          <div className="second">
-            <p>
-              Total Equity: <span>₹{formatNumber(totalEquity)}</span>{" "}
-            </p>
-            <p>
-              Invested: <span>₹{formatNumber(totalInvestment)}</span>{" "}
-            </p>
-          </div>
         </div>
         <hr className="divider" />
       </div>
