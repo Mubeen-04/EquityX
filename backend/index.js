@@ -1315,57 +1315,69 @@ app.post("/submitTicket", verifyToken, async (req, res) => {
 
     console.log(`📋 New support ticket created: ${newTicket._id} from ${email} (User: ${userId})`);
 
-    // Send confirmation email to admin
-    const adminEmailSubject = `New Support Ticket: ${category}`;
-    const adminEmailHtml = `
-      <h2>New Support Ticket Received</h2>
-      <p><strong>Ticket ID:</strong> ${newTicket._id}</p>
-      <p><strong>Name:</strong> ${name}</p>
-      <p><strong>Email:</strong> ${email}</p>
-      <p><strong>Category:</strong> ${category}</p>
-      <p><strong>Status:</strong> Open</p>
-      <p><strong>Priority:</strong> Medium</p>
-      <h3>Message:</h3>
-      <p>${message.replace(/\n/g, '<br>')}</p>
-      <hr>
-      <p><em>Ticket submitted from EquityX Trading Platform</em></p>
-    `;
+    // Send emails in the background without blocking the response
+    const sendTicketEmails = async () => {
+      try {
+        // Send confirmation email to admin
+        const adminEmailSubject = `New Support Ticket: ${category}`;
+        const adminEmailHtml = `
+          <h2>New Support Ticket Received</h2>
+          <p><strong>Ticket ID:</strong> ${newTicket._id}</p>
+          <p><strong>Name:</strong> ${name}</p>
+          <p><strong>Email:</strong> ${email}</p>
+          <p><strong>Category:</strong> ${category}</p>
+          <p><strong>Status:</strong> Open</p>
+          <p><strong>Priority:</strong> Medium</p>
+          <h3>Message:</h3>
+          <p>${message.replace(/\n/g, '<br>')}</p>
+          <hr>
+          <p><em>Ticket submitted from EquityX Trading Platform</em></p>
+        `;
 
-    // Send admin notification
-    await sendEmail(
-      process.env.EMAIL_USER,
-      adminEmailSubject,
-      `New Support Ticket: ${category}\n\nTicket ID: ${newTicket._id}\nName: ${name}\nEmail: ${email}\n\nMessage:\n${message}`,
-      adminEmailHtml
-    );
+        // Send confirmation email to user
+        const userEmailSubject = "We received your support ticket - EquityX";
+        const userEmailHtml = `
+          <h2>Thank you for contacting EquityX Support</h2>
+          <p>Hi ${name},</p>
+          <p>We have received your support ticket and will get back to you shortly.</p>
+          <p><strong>Ticket ID:</strong> ${newTicket._id}</p>
+          <p><strong>Category:</strong> ${category}</p>
+          <p><strong>Status:</strong> Open</p>
+          <p>We typically respond to tickets within 24-48 hours.</p>
+          <hr>
+          <p><strong>Your Message:</strong></p>
+          <p>${message.replace(/\n/g, '<br>')}</p>
+          <hr>
+          <p>Best regards,<br>EquityX Support Team</p>
+        `;
 
-    // Send confirmation email to user
-    const userEmailSubject = "We received your support ticket - EquityX";
-    const userEmailHtml = `
-      <h2>Thank you for contacting EquityX Support</h2>
-      <p>Hi ${name},</p>
-      <p>We have received your support ticket and will get back to you shortly.</p>
-      <p><strong>Ticket ID:</strong> ${newTicket._id}</p>
-      <p><strong>Category:</strong> ${category}</p>
-      <p><strong>Status:</strong> Open</p>
-      <p>We typically respond to tickets within 24-48 hours.</p>
-      <hr>
-      <p><strong>Your Message:</strong></p>
-      <p>${message.replace(/\n/g, '<br>')}</p>
-      <hr>
-      <p>Best regards,<br>EquityX Support Team</p>
-    `;
+        // Send both emails in parallel
+        await Promise.all([
+          sendEmail(
+            process.env.EMAIL_USER,
+            adminEmailSubject,
+            `New Support Ticket: ${category}\n\nTicket ID: ${newTicket._id}\nName: ${name}\nEmail: ${email}\n\nMessage:\n${message}`,
+            adminEmailHtml
+          ),
+          sendEmail(
+            email,
+            userEmailSubject,
+            `Thank you for contacting EquityX Support\n\nTicket ID: ${newTicket._id}\n\nWe have received your ticket and will respond within 24-48 hours.`,
+            userEmailHtml
+          )
+        ]);
 
-    // Send user confirmation
-    await sendEmail(
-      email,
-      userEmailSubject,
-      `Thank you for contacting EquityX Support\n\nTicket ID: ${newTicket._id}\n\nWe have received your ticket and will respond within 24-48 hours.`,
-      userEmailHtml
-    );
+        console.log(`✉️ Emails sent for ticket ${newTicket._id}`);
+      } catch (emailError) {
+        console.error(`❌ Failed to send emails for ticket ${newTicket._id}:`, emailError.message);
+      }
+    };
+
+    // Fire and forget - send emails in background
+    sendTicketEmails().catch(err => console.error("Background email task failed:", err));
 
     res.status(201).json({
-      msg: "Ticket submitted successfully. Confirmation email sent.",
+      msg: "Ticket submitted successfully. Confirmation email will be sent shortly.",
       ticketId: newTicket._id,
     });
   } catch (error) {

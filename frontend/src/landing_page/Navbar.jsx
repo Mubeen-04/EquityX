@@ -97,7 +97,7 @@ function Navbar() {
                       marginRight: "10px"
                     }}
                   >
-                    📊 Dashboard
+                    Dashboard
                   </a>
                 </li>
                 <li className="nav-item">
