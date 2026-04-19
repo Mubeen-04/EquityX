@@ -226,8 +226,8 @@ function Hero() {
       startOfDay.setDate(startOfDay.getDate() - 1);
     }
     
-    // Start with realistic price variation (±5% from current price)
-    let currentPrice = niftyData.price * (0.95 + Math.random() * 0.1);
+    const openPrice = niftyData.openPrice || niftyData.price;
+    let currentPrice = openPrice;
     const timeInterval = (now.getTime() - startOfDay.getTime()) / 60000; // minutes passed
     
     // Generate 1 data point per minute from 9 AM to now
@@ -239,6 +239,11 @@ function Hero() {
       // More realistic price movement: ±0.4% to +2% per minute (same as Analytics)
       const changePercent = (Math.random() - 0.4) * 3; // -0.4% to +2%
       currentPrice = currentPrice * (1 + changePercent / 100);
+    }
+    
+    // Adjust last point to match current price exactly
+    if (historicalPrices.length > 0) {
+      historicalPrices[historicalPrices.length - 1] = niftyData.price;
     }
     
     setPriceHistory(historicalPrices);
