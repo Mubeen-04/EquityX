@@ -139,6 +139,8 @@ const ChartPanel = ({ niftyData, priceHistory, timeLabels }) => {
             scales: {
               y: {
                 beginAtZero: false,
+                min: niftyData.low ? niftyData.low * 0.998 : undefined,
+                max: niftyData.high ? niftyData.high * 1.002 : undefined,
                 ticks: {
                   callback: function (value) {
                     return "₹" + value.toFixed(0);
@@ -182,7 +184,7 @@ const ChartPanel = ({ niftyData, priceHistory, timeLabels }) => {
 
 function Hero() {
   const [marketData, setMarketData] = useState([]);
-  const [niftyData, setNiftyData] = useState({ price: 0, percent: "+0.00%", isDown: false, openPrice: 0 });
+  const [niftyData, setNiftyData] = useState({ price: 0, percent: "+0.00%", isDown: false, openPrice: 0, high: 0, low: 0 });
   const [priceHistory, setPriceHistory] = useState([]);
   const [timeLabels, setTimeLabels] = useState([]);
   const [isLoggedIn, setIsLoggedIn] = useState(false);

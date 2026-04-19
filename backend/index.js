@@ -730,8 +730,8 @@ function simulatePriceUpdates() {
       const updatedHoldings = [];
       if (holdings.length > 0) {
         for (let holding of holdings) {
-          const priceChange = (Math.random() - 0.5) * 2; // -1 to +1
-          const newPrice = Math.max(holding.price + priceChange, 1); // Ensure price > 0
+          const percentChange = (Math.random() - 0.5) * 0.0016; // ±0.08% change
+          const newPrice = Math.max(holding.price * (1 + percentChange), 1); // Ensure price > 0
           
           // Update in database
           holding.price = newPrice;
@@ -749,18 +749,18 @@ function simulatePriceUpdates() {
 
       // ===== UPDATE ALL MARKET PRICES =====
       for (let stockName in marketPrices) {
-        const priceChange = (Math.random() - 0.5) * 2; // -1 to +1
+        const percentChange = (Math.random() - 0.5) * 0.0016; // ±0.08% change
         const currentPrice = marketPrices[stockName].price;
-        const newPrice = Math.max(currentPrice + priceChange, 1);
+        const newPrice = Math.max(currentPrice * (1 + percentChange), 1);
         
         // Update price
         marketPrices[stockName].price = newPrice;
         
         // Calculate percent change from opening price
         const openPrice = marketPrices[stockName].openPrice;
-        const percentChange = ((newPrice - openPrice) / openPrice * 100).toFixed(2);
-        marketPrices[stockName].percent = (percentChange >= 0 ? "+" : "") + percentChange + "%";
-        marketPrices[stockName].isDown = percentChange < 0;
+        const dailyPercentChange = ((newPrice - openPrice) / openPrice * 100).toFixed(2);
+        marketPrices[stockName].percent = (dailyPercentChange >= 0 ? "+" : "") + dailyPercentChange + "%";
+        marketPrices[stockName].isDown = dailyPercentChange < 0;
       }
 
       // ===== UPDATE INDEX VALUES =====
