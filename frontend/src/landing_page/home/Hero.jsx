@@ -78,7 +78,7 @@ const ChartPanel = ({ niftyData, priceHistory, timeLabels }) => {
       </div>
 
       {/* Chart */}
-      <div style={{ position: "relative", height: "200px", padding: "0 20px 20px 20px" }}>
+      <div style={{ position: "relative", height: "200px", padding: "0 20px 20px 20px", overflow: "hidden" }}>
         <Line
           data={{
             labels: timeLabels,
@@ -91,6 +91,7 @@ const ChartPanel = ({ niftyData, priceHistory, timeLabels }) => {
                 borderWidth: 2.5,
                 fill: true,
                 tension: 0.4,
+                clip: true,
                 pointRadius: 0,
                 pointHoverRadius: 7,
                 pointBorderWidth: 0,
@@ -139,8 +140,12 @@ const ChartPanel = ({ niftyData, priceHistory, timeLabels }) => {
             scales: {
               y: {
                 beginAtZero: false,
-                min: niftyData.low ? niftyData.low * 0.998 : undefined,
-                max: niftyData.high ? niftyData.high * 1.002 : undefined,
+                min: priceHistory.length > 0
+                  ? Math.min(...priceHistory) * 0.9995
+                  : (niftyData.low ? niftyData.low * 0.998 : undefined),
+                max: priceHistory.length > 0
+                  ? Math.max(...priceHistory) * 1.0005
+                  : (niftyData.high ? niftyData.high * 1.002 : undefined),
                 ticks: {
                   callback: function (value) {
                     return "₹" + value.toFixed(0);
@@ -170,11 +175,11 @@ const ChartPanel = ({ niftyData, priceHistory, timeLabels }) => {
           <div className="mini-stat-val">{typeof niftyData.openPrice === "number" ? niftyData.openPrice.toFixed(2) : niftyData.openPrice || "—"}</div>
         </div>
         <div className="mini-stat">
-          <div className="mini-stat-label">DAY HIGH</div>
+          <div className="mini-stat-label">HIGH</div>
           <div className="mini-stat-val up">{typeof niftyData.high === "number" ? niftyData.high.toFixed(2) : "—"}</div>
         </div>
         <div className="mini-stat">
-          <div className="mini-stat-label">DAY LOW</div>
+          <div className="mini-stat-label">52W LOW</div>
           <div className="mini-stat-val dn">{typeof niftyData.low === "number" ? niftyData.low.toFixed(2) : "—"}</div>
         </div>
       </div>
