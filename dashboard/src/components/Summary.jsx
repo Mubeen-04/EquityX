@@ -125,13 +125,12 @@ const Summary = () => {
         <hr className="divider" />
       </div>
 
-      {(
-        <div className="section">
-          <span>
-            <p>Market Top Gainers & Losers</p>
-          </span>
+      <div className="section">
+        <span>
+          <p>Market Top Gainers & Losers</p>
+        </span>
 
-          <div className="gainers-losers-grid">
+        <div className="gainers-losers-grid">
             {/* Top Gainers */}
             <div className="gainers-table">
               <h4>Top Gainers</h4>
@@ -188,7 +187,6 @@ const Summary = () => {
           </div>
           <hr className="divider" />
         </div>
-      )}
 
       {showAddBalance && (
         <AddBalanceModal 
