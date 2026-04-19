@@ -125,8 +125,9 @@ export const RealTimeProvider = ({ children }) => {
         setIndices(newData.indices);
         setBalance(balanceRes.data.balance || 100000);
         
-        // Cache the data
-        localStorage.setItem("tradingAppCache", JSON.stringify(newData));
+        // Cache the data with user-specific key to prevent data leaking between users
+        const cacheKey = userId ? `tradingAppCache_${userId}` : "tradingAppCache";
+        localStorage.setItem(cacheKey, JSON.stringify(newData));
         
         setIsInitialized(true);
         console.log("Initial data loaded and cached, Balance: ₹" + (balanceRes.data.balance || 100000));
@@ -178,11 +179,13 @@ export const RealTimeProvider = ({ children }) => {
         setHoldings(data);
         setLastUpdate(new Date());
         
-        // Cache the data
-        const cached = JSON.parse(localStorage.getItem("tradingAppCache") || "{}");
+        // Cache the data with user-specific key
+        const userId = localStorage.getItem("userId");
+        const cacheKey = userId ? `tradingAppCache_${userId}` : "tradingAppCache";
+        const cached = JSON.parse(localStorage.getItem(cacheKey) || "{}");
         cached.holdings = data;
         cached.timestamp = new Date().toISOString();
-        localStorage.setItem("tradingAppCache", JSON.stringify(cached));
+        localStorage.setItem(cacheKey, JSON.stringify(cached));
       });
 
       socketIO.on("positionsData", (data) => {
@@ -190,11 +193,13 @@ export const RealTimeProvider = ({ children }) => {
         setPositions(data);
         setLastUpdate(new Date());
         
-        // Cache the data
-        const cached = JSON.parse(localStorage.getItem("tradingAppCache") || "{}");
+        // Cache the data with user-specific key
+        const userId = localStorage.getItem("userId");
+        const cacheKey = userId ? `tradingAppCache_${userId}` : "tradingAppCache";
+        const cached = JSON.parse(localStorage.getItem(cacheKey) || "{}");
         cached.positions = data;
         cached.timestamp = new Date().toISOString();
-        localStorage.setItem("tradingAppCache", JSON.stringify(cached));
+        localStorage.setItem(cacheKey, JSON.stringify(cached));
       });
 
       socketIO.on("priceUpdate", (data) => {
@@ -202,11 +207,13 @@ export const RealTimeProvider = ({ children }) => {
         setHoldings(data);
         setLastUpdate(new Date());
         
-        // Cache the data
-        const cached = JSON.parse(localStorage.getItem("tradingAppCache") || "{}");
+        // Cache the data with user-specific key
+        const userId = localStorage.getItem("userId");
+        const cacheKey = userId ? `tradingAppCache_${userId}` : "tradingAppCache";
+        const cached = JSON.parse(localStorage.getItem(cacheKey) || "{}");
         cached.holdings = data;
         cached.timestamp = new Date().toISOString();
-        localStorage.setItem("tradingAppCache", JSON.stringify(cached));
+        localStorage.setItem(cacheKey, JSON.stringify(cached));
       });
 
       socketIO.on("marketPricesUpdate", (data) => {
@@ -214,11 +221,13 @@ export const RealTimeProvider = ({ children }) => {
         setMarketPrices(data);
         setLastUpdate(new Date());
         
-        // Cache the data
-        const cached = JSON.parse(localStorage.getItem("tradingAppCache") || "{}");
+        // Cache the data with user-specific key
+        const userId = localStorage.getItem("userId");
+        const cacheKey = userId ? `tradingAppCache_${userId}` : "tradingAppCache";
+        const cached = JSON.parse(localStorage.getItem(cacheKey) || "{}");
         cached.marketPrices = data;
         cached.timestamp = new Date().toISOString();
-        localStorage.setItem("tradingAppCache", JSON.stringify(cached));
+        localStorage.setItem(cacheKey, JSON.stringify(cached));
       });
 
       socketIO.on("indexUpdate", (data) => {
@@ -226,11 +235,13 @@ export const RealTimeProvider = ({ children }) => {
         setIndices(data);
         setLastUpdate(new Date());
         
-        // Cache the data
-        const cached = JSON.parse(localStorage.getItem("tradingAppCache") || "{}");
+        // Cache the data with user-specific key
+        const userId = localStorage.getItem("userId");
+        const cacheKey = userId ? `tradingAppCache_${userId}` : "tradingAppCache";
+        const cached = JSON.parse(localStorage.getItem(cacheKey) || "{}");
         cached.indices = data;
         cached.timestamp = new Date().toISOString();
-        localStorage.setItem("tradingAppCache", JSON.stringify(cached));
+        localStorage.setItem(cacheKey, JSON.stringify(cached));
       });
 
       socketIO.on("balanceUpdate", (data) => {
@@ -270,15 +281,6 @@ export const RealTimeProvider = ({ children }) => {
         setIsConnected(false);
         setMode("polling"); // Auto-fallback to polling on error
       });
-
-      // Emit join event with token
-      const token = localStorage.getItem("token");
-      if (token) {
-        socketIO.emit("join", token);
-        console.log("Emitted join event with token");
-      } else {
-        console.warn("No token found for WebSocket join event");
-      }
 
       // Fallback to polling if socket doesn't connect within 5 seconds
       const connectionTimeout = setTimeout(() => {

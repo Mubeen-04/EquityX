@@ -467,7 +467,7 @@ app.post("/newOrder", verifyToken, async (req, res) => {
 
     await newOrder.save();
 
-    io.emit("newOrder", newOrder);
+    io.to(`user_${userId}`).emit("newOrder", newOrder);
     console.log(`📦 New ${mode} order placed for ${name}: ${qty} @ ₹${price}`);
 
     // Auto-execute order after 3-5 seconds
@@ -479,7 +479,7 @@ app.post("/newOrder", verifyToken, async (req, res) => {
           { $set: { status: "executed", updatedAt: new Date() } },
           { new: true }
         );
-        io.emit("orderStatusUpdate", updatedOrder);
+        io.to(`user_${updatedOrder.userId}`).emit("orderStatusUpdate", updatedOrder);
         console.log(`Order executed: ${updatedOrder.name}`);
 
         // Update holdings for BUY order
@@ -579,8 +579,8 @@ app.put("/cancelOrder/:orderId", async (req, res) => {
       return res.status(404).json({ msg: "Order not found" });
     }
 
-    // Broadcast order cancellation to all connected clients
-    io.emit("orderStatusUpdate", updatedOrder);
+    // Broadcast order cancellation to the order owner only
+    io.to(`user_${updatedOrder.userId}`).emit("orderStatusUpdate", updatedOrder);
     console.log(`🚫 Order cancelled: ${updatedOrder.name}`);
 
     res.json({ msg: "Order cancelled successfully!", order: updatedOrder });
@@ -738,7 +738,8 @@ function simulatePriceUpdates() {
       // ===== UPDATE HOLDINGS PRICES =====
       const holdings = await HoldingsModel.find({});
       
-      const updatedHoldings = [];
+      // Group updated holdings by userId to emit per-user (prevents data leaking between users)
+      const holdingsByUser = {};
       if (holdings.length > 0) {
         for (let holding of holdings) {
           const percentChange = (Math.random() - 0.5) * 0.0016; // ±0.08% change
@@ -749,7 +750,11 @@ function simulatePriceUpdates() {
           holding.day = ((newPrice - holding.avg) / holding.avg * 100).toFixed(2) + "%";
           await holding.save();
           
-          updatedHoldings.push(holding.toObject());
+          const uid = holding.userId ? holding.userId.toString() : null;
+          if (uid) {
+            if (!holdingsByUser[uid]) holdingsByUser[uid] = [];
+            holdingsByUser[uid].push(holding.toObject());
+          }
           
           // Also update market prices for stocks in holdings
           if (marketPrices[holding.name]) {
@@ -790,9 +795,9 @@ function simulatePriceUpdates() {
         console.log(`Market update #${updateCount} - Broadcasting to ${Object.keys(io.sockets.sockets).length} connected clients`);
       }
       
-      // Emit holdings update
-      if (updatedHoldings.length > 0) {
-        io.emit("priceUpdate", updatedHoldings);
+      // Emit holdings update per user (prevents data leaking between users)
+      for (const [uid, userHoldings] of Object.entries(holdingsByUser)) {
+        io.to(`user_${uid}`).emit("priceUpdate", userHoldings);
       }
       
       // Emit market prices update (all 50 stocks)
@@ -983,8 +988,8 @@ app.post("/confirm-payment", async (req, res) => {
 
     await newOrder.save();
 
-    // Broadcast new order to all connected dashboard clients
-    io.emit("newOrder", newOrder);
+    // Broadcast new order to the order owner only
+    io.to(`user_${newOrder.userId}`).emit("newOrder", newOrder);
     console.log(`💳 Paid order placed: ${qty} ${name} @ ₹${price} (Payment ID: ${paymentIntentId})`);
 
     // Auto-execute order after 3-5 seconds (realistic simulation)
@@ -996,7 +1001,7 @@ app.post("/confirm-payment", async (req, res) => {
           { $set: { status: "executed", updatedAt: new Date() } },
           { new: true }
         );
-        io.emit("orderStatusUpdate", updatedOrder);
+        io.to(`user_${updatedOrder.userId}`).emit("orderStatusUpdate", updatedOrder);
         console.log(`Order executed: ${updatedOrder.name}`);
 
         // Update balance (deduct for BUY, add for SELL)
