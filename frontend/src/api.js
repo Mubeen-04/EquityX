@@ -1,10 +1,8 @@
 import axios from "axios";
 
-// Use relative URLs by default (works on any domain)
-// For development: set VITE_API_URL in .env.local
-const API = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || "",
-});
+// Create API instance with no baseURL - use relative paths
+// This will work on any domain (localhost:3000, equityx.onrender.com, etc)
+const API = axios.create();
 
 // Add token to headers if it exists
 API.interceptors.request.use((config) => {
