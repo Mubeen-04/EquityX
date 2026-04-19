@@ -48,6 +48,11 @@ const ChartPanel = ({ niftyData, priceHistory, timeLabels }) => {
   const percent = niftyData.percent || "+0.00%";
   const isPositive = !niftyData.isDown;
 
+  // Compute live day high/low from actual price history
+  const dayHigh = priceHistory.length > 0 ? Math.max(...priceHistory) : niftyData.high;
+  const dayLow  = priceHistory.length > 0 ? Math.min(...priceHistory) : niftyData.low;
+  const openPrice = niftyData.openPrice || niftyData.price;
+
   return (
     <div className="hero-panel">
       <div className="panel-header">
@@ -170,17 +175,17 @@ const ChartPanel = ({ niftyData, priceHistory, timeLabels }) => {
       </div>
 
       <div className="mini-stats">
-        <div className="mini-stat">DAY HIGH</div>
-          <div className="mini-stat-val up">{typeof niftyData.high === "number" ? niftyData.high.toFixed(2) : "—"}</div>
+        <div className="mini-stat">
+          <div className="mini-stat-label">OPEN</div>
+          <div className="mini-stat-val">{typeof openPrice === "number" ? openPrice.toFixed(2) : "—"}</div>
         </div>
         <div className="mini-stat">
-          <div className="mini-stat-label">DAY
-          <div className="mini-stat-label">HIGH</div>
-          <div className="mini-stat-val up">{typeof niftyData.high === "number" ? niftyData.high.toFixed(2) : "—"}</div>
+          <div className="mini-stat-label">DAY HIGH</div>
+          <div className="mini-stat-val up">{typeof dayHigh === "number" ? dayHigh.toFixed(2) : "—"}</div>
         </div>
         <div className="mini-stat">
-          <div className="mini-stat-label">52W LOW</div>
-          <div className="mini-stat-val dn">{typeof niftyData.low === "number" ? niftyData.low.toFixed(2) : "—"}</div>
+          <div className="mini-stat-label">DAY LOW</div>
+          <div className="mini-stat-val dn">{typeof dayLow === "number" ? dayLow.toFixed(2) : "—"}</div>
         </div>
       </div>
     </div>
