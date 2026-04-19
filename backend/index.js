@@ -1269,10 +1269,19 @@ app.get("/ticket/:ticketId", async (req, res) => {
 
 // Serve static files from built apps
 const buildPath = path.join(__dirname, "..");
-app.use(express.static(path.join(buildPath, "dashboard/dist")));
+
+// Serve dashboard static files at /dashboard path
+app.use("/dashboard", express.static(path.join(buildPath, "dashboard/dist")));
+
+// Dashboard SPA fallback - serve dashboard index.html for /dashboard/* routes
+app.get("/dashboard/*", (req, res) => {
+  res.sendFile(path.join(buildPath, "dashboard/dist/index.html"));
+});
+
+// Serve frontend static files at root
 app.use(express.static(path.join(buildPath, "frontend/dist")));
 
-// SPA fallback - serve index.html for all unknown routes
+// Frontend SPA fallback - serve frontend index.html for all other routes
 app.get("*", (req, res) => {
   res.sendFile(path.join(buildPath, "frontend/dist/index.html"));
 });
