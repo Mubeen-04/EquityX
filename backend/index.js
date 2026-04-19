@@ -1311,7 +1311,11 @@ const buildPath = path.join(__dirname, "..");
 // Serve dashboard static files at /dashboard path
 app.use("/dashboard", express.static(path.join(buildPath, "dashboard/dist")));
 
-// Dashboard SPA fallback - serve dashboard index.html for /dashboard/* routes
+// Dashboard SPA fallback - serve dashboard index.html for /dashboard and /dashboard/* routes
+app.get("/dashboard", (req, res) => {
+  res.sendFile(path.join(buildPath, "dashboard/dist/index.html"));
+});
+
 app.get("/dashboard/*", (req, res) => {
   res.sendFile(path.join(buildPath, "dashboard/dist/index.html"));
 });
