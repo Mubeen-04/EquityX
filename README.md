@@ -1,4 +1,4 @@
-# Zerodha Stock Trading Dashboard
+# Equityx Stock Trading Dashboard
 
 
 <img width="1419" height="727" alt="image" src="https://github.com/user-attachments/assets/a900a17c-a4ba-4f07-9b5a-a121a738145c" />
