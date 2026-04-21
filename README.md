@@ -1,5 +1,8 @@
 # Zerodha Stock Trading Dashboard
 
+
+<img width="1419" height="727" alt="image" src="https://github.com/user-attachments/assets/a900a17c-a4ba-4f07-9b5a-a121a738145c" />
+
 A full-stack real-time stock trading platform built with **React**, **Node.js**, **Express**, **MongoDB**, and **Socket.io**. Features live market data, buy/sell operations, portfolio management, and payment integration with Stripe.
 
 ## Features
